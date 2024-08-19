@@ -1,21 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import TodoList from "./components/TodoList/TodoList";
 import "./App.css";
 
+interface Todo {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
   const [loading, setLoading] = useState(true);
   const [newTodo, setNewTodo] = useState("");
   const [saving, setSaving] = useState(false);
 
-  function onChange(e) {
+  function onChange(e: ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
     setNewTodo(value);
   }
 
-  function addTodo(e) {
+  function addTodo(e: FormEvent) {
     e.preventDefault();
-    const value = {
+    const value: Todo = {
       userId: 3,
       id: Math.floor(Math.random() * 10000) + 1,
       title: newTodo,
@@ -37,11 +44,11 @@ function App() {
       });
   }
 
-  function removeTodo(id) {
+  function removeTodo(id: number) {
     setTodos(todos.filter((t) => t.id !== id));
   }
 
-  function updateTodo(id) {
+  function updateTodo(id: number) {
     const newList = todos.map((todoItem) => {
       if (todoItem.id === id) {
         const updatedItem = { ...todoItem, completed: !todoItem.completed };

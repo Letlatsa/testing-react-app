@@ -1,7 +1,21 @@
 import React from 'react';
-import styles from './TodoItem.module.css'
+import styles from './TodoItem.module.css';
 
-const TodoItem = ({ todo, removeHandler, updateTodo }) => {
+// the type for the todo item
+interface Todo {
+    id: number;
+    title: string;
+    completed: boolean;
+}
+
+// the type for the component props
+interface TodoItemProps {
+    todo: Todo;
+    removeHandler: (id: number) => void;
+    updateTodo: (id: number) => void;
+}
+
+const TodoItem: React.FC<TodoItemProps> = ({ todo, removeHandler, updateTodo }) => {
     return (
         <div className={styles.itemContainer}>
             <div>
@@ -20,7 +34,13 @@ const TodoItem = ({ todo, removeHandler, updateTodo }) => {
                     {todo.title}
                 </label>
             </div>
-            <button className={styles.closeBtn} data-testid={`close-btn-${todo.id}`} onClick={() => removeHandler(todo.id)}>X</button>
+            <button
+                className={styles.closeBtn}
+                data-testid={`close-btn-${todo.id}`}
+                onClick={() => removeHandler(todo.id)}
+            >
+                X
+            </button>
         </div>
     );
 }
